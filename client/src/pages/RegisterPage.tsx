@@ -19,7 +19,13 @@ const RegisterPage = () => {
   const location = useLocation();
 
   const { isAuthenticated, loading, error } = useAppSelector(
-    (state: { auth: unknown }) => state.auth
+    (state: {
+      auth: {
+        isAuthenticated: boolean;
+        loading: boolean;
+        error: string | null;
+      };
+    }) => state.auth
   );
 
   const redirect = location.search ? location.search.split("=")[1] : "/";
