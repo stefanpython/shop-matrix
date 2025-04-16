@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
-  JSXElementConstructor,
+  //   JSXElementConstructor,
   Key,
-  ReactElement,
-  ReactNode,
-  ReactPortal,
+  //   ReactElement,
+  //   ReactNode,
+  //   ReactPortal,
   useEffect,
 } from "react";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
@@ -26,7 +26,7 @@ const HomePage = () => {
   const { categories } = useAppSelector((state: any) => state.categories);
 
   useEffect(() => {
-    dispatch(fetchFeaturedProducts());
+    dispatch(fetchFeaturedProducts(0));
     dispatch(fetchTopProducts());
     dispatch(fetchCategories());
   }, [dispatch]);
