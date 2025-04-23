@@ -95,6 +95,51 @@ export const register = createAsyncThunk(
   }
 );
 
+export const updateUserProfile = createAsyncThunk(
+  "auth/updateUserProfile",
+  async (
+    userData: { name?: string; email?: string; password?: string },
+    { getState, rejectWithValue }
+  ) => {
+    try {
+      const state = getState() as { auth: AuthState };
+      const user = state.auth.user;
+
+      if (!user) {
+        return rejectWithValue("No user logged in");
+      }
+
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/users/profile`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${user.token}`,
+          },
+          body: JSON.stringify(userData),
+        }
+      );
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        return rejectWithValue(errorData.message || "Profile update failed");
+      }
+
+      const data = await response.json();
+      // Update local storage with new user data
+      const updatedUser = { ...user, ...data };
+      localStorage.setItem("user", JSON.stringify(updatedUser));
+      return updatedUser;
+    } catch (error) {
+      if (error instanceof Error) {
+        return rejectWithValue(error.message);
+      }
+      return rejectWithValue("Profile update failed. Please try again.");
+    }
+  }
+);
+
 export const logout = createAsyncThunk("auth/logout", async () => {
   localStorage.removeItem("user");
   return null;
@@ -133,6 +178,22 @@ const authSlice = createSlice({
         state.isAuthenticated = true;
       })
       .addCase(register.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
+      .addCase(updateUserProfile.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(
+        updateUserProfile.fulfilled,
+        (state, action: PayloadAction<User>) => {
+          state.loading = false;
+          state.user = action.payload;
+          state.isAuthenticated = true;
+        }
+      )
+      .addCase(updateUserProfile.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
       })

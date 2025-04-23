@@ -17,7 +17,7 @@ import ShippingPage from "./pages/ShippingPage";
 import PaymentPage from "./pages/PaymentPage";
 import PlaceOrderPage from "./pages/PlaceOrderPage";
 import OrderPage from "./pages/OrderPage";
-import ProductListPage from "./pages/ProductListPage";
+// import ProductListPage from "./pages/ProductListPage";
 import CategoryPage from "./pages/CategoryPage";
 import SearchPage from "./pages/SearchPage";
 import NotFoundPage from "./pages/NotFoundPage";
@@ -25,10 +25,10 @@ import NotFoundPage from "./pages/NotFoundPage";
 // Admin pages
 import AdminDashboardPage from "./pages/admin/DashboardPage";
 import AdminProductListPage from "./pages/admin/ProductListPage";
-import AdminProductEditPage from "./pages/admin/ProductEditPage";
+// import AdminProductEditPage from "./pages/admin/ProductEditPage";
 import AdminOrderListPage from "./pages/admin/OrderListPage";
 import AdminUserListPage from "./pages/admin/UserListPage";
-import AdminCategoryListPage from "./pages/admin/CategoryListPage";
+// import AdminCategoryListPage from "./pages/admin/CategoryListPage";
 
 // Protected route component
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -109,14 +109,14 @@ function App() {
                   </AdminRoute>
                 }
               />
-              <Route
+              {/* <Route
                 path="/admin/product/:id/edit"
                 element={
                   <AdminRoute>
                     <AdminProductEditPage />
                   </AdminRoute>
                 }
-              />
+              /> */}
               <Route
                 path="/admin/orderlist"
                 element={
@@ -133,14 +133,14 @@ function App() {
                   </AdminRoute>
                 }
               />
-              <Route
+              {/* <Route
                 path="/admin/categorylist"
                 element={
                   <AdminRoute>
                     <AdminCategoryListPage />
                   </AdminRoute>
                 }
-              />
+              /> */}
 
               {/* 404 page */}
               <Route path="*" element={<NotFoundPage />} />
